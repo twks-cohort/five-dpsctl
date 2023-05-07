@@ -12,11 +12,11 @@ parameters:
   context:
     description: circleci context for all jobs
     type: string
-    default: twdps-core-labs-team
+    default: cohorts
   go-version:
     description: version for go-builder
     type: string
-    default: 1.18.2
+    default: "1.19"
 
 on-push-main: &on-push-main
   branches:
@@ -63,7 +63,7 @@ jobs:
       - run:
           name: lint
           command: |
-            curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.46.2
+            curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.52.2
             golangci-lint run ./...
 
   release:
@@ -78,8 +78,8 @@ jobs:
       - run:
           name: fetch keys for signing
           command: |
-            echo "op://empc-lab/svc-cosign-private-key/notesPlain" > cosign.key.env
-            echo "op://empc-lab/svc-cosign-public-key/notesPlain" > cosign.pub.env
+            echo "op://cohorts/svc-five-cosign-private-key/notesPlain" > cosign.key.env
+            echo "op://cohorts/svc-five-cosign-public-key/notesPlain" > cosign.pub.env
             op inject -i cosign.key.env -o cosign.key
             op inject -i cosign.pub.env -o cosign.pub
       - run:
