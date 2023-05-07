@@ -16,7 +16,7 @@ builds:
 signs:
   - cmd: cosign
     stdin: '{{ .Env.COSIGN_PWD }}'
-    args: ["sign-blob", "--key=cosign.key", "--output-signature=${signature}", "--yes", "${artifact}"]
+    args: args: ["sign-blob", "--key=cosign.key", "--output=${signature}", "${artifact}","-y"]
     artifacts: all
 archives:
   - name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
